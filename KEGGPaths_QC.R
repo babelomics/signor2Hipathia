@@ -1,7 +1,7 @@
 #####################################################################
 ####################### MGI Validator Main Script ###################
 #####################################################################
-# 
+# Authos: Kinza rian (kinza.rian@juntadeandalucia.es/rian.kinza@gmail.com)
 # Description:
 # This script validates the integrity of MGI object obtained from KEGG pathways 
 # It checks for discrepancies in subgraph, effector subgraph and the main graph
@@ -52,7 +52,7 @@ missingNodesInSubgraph <- setdiff(graph_vertices$name , subgraphs_vertices) %>% 
 missingNodesInSubgraph[degree(pathways$pathigraphs$hsa04020$graph, mode="out")==0] %>% length()
 missingNodesInSubgraph[degree(pathways$pathigraphs$hsa04020$graph, mode="in")==0]%>% length()
 # check the number of subgraphs 
-
+# Here even I was trying to construct again the effectorsubgraphs, but give me the same as the MGI! 
 mgi_effector.subgraphs_hsa04020 <- pathways$pathigraphs$hsa04020$effector.subgraphs
 actual_effector.subgraphs_hsa04020 <- get_subgraphs(pathways$pathigraphs$hsa04020$graph, decompose = F)
 # names 
@@ -63,7 +63,7 @@ lapply(names(mgi_effector.subgraphs_hsa04020), function(sp){
   all(V(mgi_effector.subgraphs_hsa04020[[sp]])  == V(actual_effector.subgraphs_hsa04020[[sp]]))
   }) %>% unlist() %>% all
 
-# graph 
+# node example : "N-hsa04020-6" 
 actual_effector.subgraphs_hsa04020 %>% names %>% length()
 "N-hsa04020-6" %in% V(pathways$pathigraphs$hsa04020$graph)$name
 lapply(pathways$pathigraphs$hsa04020$effector.subgraphs, function(sp){
